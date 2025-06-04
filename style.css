@@ -1,0 +1,567 @@
+/* style.css */
+:root {
+    --retain-dark-bg: #121212; /* Very dark grey, almost black for main background */
+    --retain-card-bg: #1A1A1A; /* Slightly lighter for cards/sections */
+    --retain-element-bg: #242424; /* For elements like input fields */
+    --retain-text-primary: #EAEAEA; /* Light grey for primary text */
+    --retain-text-secondary: #B0B0B0; /* Medium grey for secondary/muted text */
+    --retain-green-accent: #33FF99; /* Vibrant green for CTAs and highlights */
+    --retain-green-accent-hover: #2CE68A; /* Slightly darker/muted green for hover */
+    --retain-green-text-on-accent: #0D0D0D; /* Very dark text for on-green buttons */
+    --retain-border-color: #2D2D2D; /* Dark border for elements */
+    --retain-error-bg: #4d1a1a;
+    --retain-error-text: #ffacac;
+    --retain-error-border: #8d2929;
+
+    --font-family: 'Roboto', 'Arial', sans-serif;
+    --box-shadow-light: 0 2px 8px rgba(51, 255, 153, 0.1); /* Subtle green glow for non-interactive */
+    --box-shadow-interactive: 0 4px 12px rgba(51, 255, 153, 0.15); /* Slightly stronger for interactive elements */
+    --box-shadow-interactive-hover: 0 6px 18px rgba(51, 255, 153, 0.2);
+    --border-radius: 6px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--retain-dark-bg);
+    color: var(--retain-text-primary);
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -50px; /* Hidden well off-screen */
+    left: 0;
+    background: var(--retain-green-accent);
+    color: var(--retain-green-text-on-accent);
+    padding: 10px 15px;
+    z-index: 10000;
+    text-decoration: none;
+    border-radius: 0 0 var(--border-radius) 0;
+    font-weight: 500;
+    box-shadow: var(--box-shadow-interactive);
+}
+
+.skip-link:focus {
+    top: 0; /* Bring it into view on focus */
+}
+
+.app-header {
+    background: var(--retain-card-bg); /* Solid dark background */
+    color: var(--retain-text-primary);
+    padding: 20px 40px; /* Adjusted padding */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 2.5em; /* Slightly adjusted */
+    font-weight: 700;
+    color: var(--retain-text-primary);
+}
+
+.app-header p {
+    margin: 5px 0 0;
+    font-size: 1.1em;
+    font-weight: 300;
+    color: var(--retain-text-secondary);
+}
+
+.app-nav {
+    background-color: var(--retain-card-bg); /* Match header or be slightly different */
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--retain-border-color);
+}
+
+.app-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.app-nav li button {
+    display: block;
+    color: var(--retain-text-secondary);
+    text-align: center;
+    padding: 14px 22px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: var(--font-family);
+    font-weight: 500; /* Slightly bolder for nav items */
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    border-bottom: 3px solid transparent; /* For active indicator */
+}
+
+.app-nav li button:hover,
+.app-nav li button:focus {
+    color: var(--retain-text-primary);
+    background-color: var(--retain-element-bg); /* Subtle bg change */
+    outline: none;
+}
+
+.app-nav li.active button {
+    color: var(--retain-green-accent);
+    font-weight: 700;
+    border-bottom-color: var(--retain-green-accent);
+}
+
+.app-nav li button:active {
+    transform: translateY(1px);
+}
+
+
+main#main-content {
+    padding: 40px 20px;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto; /* Removed top/bottom margin as sections have it */
+    width: 90%;
+}
+
+main#main-content:focus {
+    outline: none;
+}
+
+section {
+    background-color: var(--retain-card-bg);
+    padding: 35px;
+    margin-bottom: 35px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--retain-border-color);
+    box-shadow: var(--box-shadow-light);
+}
+
+section h2 {
+    color: var(--retain-text-primary);
+    margin-top: 0;
+    font-size: 2em; /* Larger section headings */
+    font-weight: 700;
+    border-bottom: 2px solid var(--retain-green-accent);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.service-options, .pricing-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.service-card, .pricing-card {
+    background-color: var(--retain-element-bg); /* Slightly different from section for depth */
+    border: 1px solid var(--retain-border-color);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--box-shadow-light);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.service-card:hover, .pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-interactive-hover);
+    border-color: var(--retain-green-accent);
+}
+
+.service-card h3, .pricing-card h3 {
+    color: var(--retain-green-accent);
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+.service-card p, .pricing-card p {
+    flex-grow: 1;
+    color: var(--retain-text-secondary);
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: var(--retain-green-accent);
+    color: var(--retain-green-text-on-accent) !important; /* Ensure dark text on green */
+    border: none;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.05em;
+    margin-top: auto;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease, box-shadow 0.2s ease;
+    font-weight: 700; /* Bold text on CTA */
+    align-self: flex-start;
+    box-shadow: var(--box-shadow-interactive);
+}
+
+.cta-button:hover, .cta-button:focus {
+    background-color: var(--retain-green-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-interactive-hover);
+    outline: 2px solid var(--retain-green-accent-hover);
+    outline-offset: 2px;
+}
+.cta-button:active{
+    transform: translateY(0);
+    box-shadow: var(--box-shadow-light);
+}
+
+.cta-button:disabled {
+    background-color: #555; /* Darker grey for disabled */
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Specific button styles to match the new theme */
+.paypal-button { /* Make it a primary CTA style */
+    background-color: var(--retain-green-accent);
+    color: var(--retain-green-text-on-accent) !important;
+}
+.paypal-button:hover, .paypal-button:focus {
+    background-color: var(--retain-green-accent-hover);
+}
+
+.other-payment-button { /* Make this an outline-style button */
+    background-color: transparent;
+    color: var(--retain-green-accent) !important;
+    border: 2px solid var(--retain-green-accent);
+}
+.other-payment-button:hover, .other-payment-button:focus {
+    background-color: rgba(51, 255, 153, 0.1); /* Subtle green fill on hover */
+    color: var(--retain-green-accent-hover) !important;
+    border-color: var(--retain-green-accent-hover);
+}
+
+
+.payment-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align to start */
+}
+
+/* Generic Form Styles (can be used by homework-form and contact-form) */
+.form-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px; /* Limit form width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-layout .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-layout label {
+    font-weight: 500;
+    font-size: 1.1em;
+    color: var(--retain-text-primary);
+}
+
+.form-layout input[type="text"],
+.form-layout input[type="email"],
+.form-layout select,
+.form-layout textarea {
+    padding: 12px 15px; /* Consistent padding */
+    border-radius: var(--border-radius);
+    border: 1px solid var(--retain-border-color);
+    background-color: var(--retain-element-bg);
+    color: var(--retain-text-primary);
+    font-family: var(--font-family);
+    font-size: 1em;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%; /* Ensure full width within form group */
+}
+
+.form-layout input[type="text"]:focus,
+.form-layout input[type="email"]:focus,
+.form-layout select:focus,
+.form-layout textarea:focus {
+    border-color: var(--retain-green-accent);
+    box-shadow: 0 0 0 3px rgba(51, 255, 153, 0.25);
+    outline: none;
+    background-color: var(--retain-card-bg); /* Slightly different focus bg */
+}
+
+.form-layout textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-layout select {
+    appearance: none; /* For custom arrow later if desired */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%207.5L10%2012.5L15%207.5%22%20stroke%3D%22%23B0B0B0%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px 16px;
+    padding-right: 40px; /* Space for arrow */
+}
+.form-layout select:focus {
+     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%207.5L10%2012.5L15%207.5%22%20stroke%3D%22%23EAEAEA%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E');
+}
+
+
+.form-layout .cta-button { /* Submit button for forms */
+    align-self: center; /* Center button in form */
+    width: auto; /* Auto width, or set to 100% if preferred */
+    min-width: 200px;
+    padding: 15px; /* Larger padding for main submit buttons */
+}
+
+.form-error-message { /* Inline error messages for form fields */
+    color: var(--retain-error-text);
+    font-size: 0.9em;
+    margin-top: 2px; /* Reduced margin from 6px */
+    /* background-color: var(--retain-error-bg); Already handled by section-level error */
+    /* padding: 5px 8px; */
+    border-radius: var(--border-radius);
+}
+
+.form-layout input[aria-invalid="true"],
+.form-layout select[aria-invalid="true"],
+.form-layout textarea[aria-invalid="true"] {
+    border-color: var(--retain-error-border);
+}
+.form-layout input[aria-invalid="true"]:focus,
+.form-layout select[aria-invalid="true"]:focus,
+.form-layout textarea[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(255, 100, 100, 0.3);
+}
+
+.section-message { /* For success or general messages within a section */
+    margin-top: 30px;
+    padding: 20px 25px;
+    background-color: var(--retain-element-bg);
+    border-left: 5px solid var(--retain-green-accent);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    box-shadow: var(--box-shadow-light);
+    text-align: center;
+}
+.section-message.success h3 {
+    color: var(--retain-green-accent);
+    font-size: 1.6em;
+    margin-top:0;
+    margin-bottom: 15px;
+}
+.section-message.success p {
+    color: var(--retain-text-primary);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+.section-message.success p strong {
+    color: var(--retain-green-accent);
+}
+
+
+.ai-response { /* Specific for AI response, can be merged with .section-message if identical */
+    margin-top: 30px;
+    padding: 25px;
+    background-color: var(--retain-element-bg);
+    border-left: 5px solid var(--retain-green-accent);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    box-shadow: var(--box-shadow-light);
+}
+
+.ai-response h3 {
+    margin-top: 0;
+    color: var(--retain-green-accent);
+    font-size: 1.4em;
+}
+.ai-response p {
+    color: var(--retain-text-secondary);
+}
+
+.error-message { /* Section-level error message */
+    color: var(--retain-error-text);
+    font-size: 0.95em;
+    background-color: var(--retain-error-bg);
+    padding: 12px 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--retain-error-border);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.app-footer {
+    background-color: var(--retain-card-bg); /* Consistent dark background */
+    color: var(--retain-text-secondary);
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: auto; /* Pushes footer to bottom */
+    border-top: 1px solid var(--retain-border-color);
+}
+
+.app-footer p {
+    margin: 8px 0;
+    font-size: 0.9em;
+}
+.app-footer .footer-links {
+    margin-bottom: 10px;
+}
+
+.app-footer a {
+    color: var(--retain-text-secondary); /* Muted link color */
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.2s ease;
+}
+
+.app-footer a:hover, .app-footer a:focus {
+    color: var(--retain-green-accent); /* Highlight with accent color */
+    text-decoration: underline;
+    outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .app-header h1 {
+        font-size: 2.2em;
+    }
+    .app-header p {
+        font-size: 1em;
+    }
+    main#main-content {
+        width: 95%;
+    }
+    section {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+    .app-header {
+        padding: 15px 20px;
+    }
+    .app-header h1 {
+        font-size: 1.9em;
+    }
+
+    .app-nav ul {
+        flex-direction: column; /* Stack nav items */
+    }
+    .app-nav li button {
+        width: 100%;
+        padding: 12px 20px; /* Adjust padding for stacked items */
+        font-size: 1em;
+        border-bottom: 1px solid var(--retain-border-color); /* Separator for stacked items */
+    }
+    .app-nav li:last-child button {
+        border-bottom: none;
+    }
+    .app-nav li.active button {
+        border-left: 3px solid var(--retain-green-accent); /* Side border for active in stacked view */
+        border-bottom-color: var(--retain-border-color); /* Reset bottom border */
+    }
+
+
+    main#main-content {
+        padding: 25px 15px;
+    }
+    section h2 {
+        font-size: 1.7em;
+    }
+
+    .service-options, .pricing-options {
+        grid-template-columns: 1fr; /* Single column for cards */
+        gap: 20px;
+    }
+    .cta-button {
+        width: 100%;
+        text-align: center;
+    }
+    .payment-buttons {
+        flex-direction: column;
+    }
+    .payment-buttons .cta-button {
+        width: 100%;
+    }
+
+    .form-layout {
+        gap: 15px;
+    }
+    .form-layout .cta-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-header {
+        padding: 15px;
+    }
+    .app-header h1 {
+        font-size: 1.7em;
+    }
+    .app-header p {
+        font-size: 0.85em;
+    }
+    section {
+        padding: 20px;
+    }
+    section h2 {
+        font-size: 1.5em;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    .service-card h3, .pricing-card h3 {
+        font-size: 1.3em;
+    }
+    .cta-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+    .form-layout textarea {
+        min-height: 100px;
+    }
+    .app-footer {
+        padding: 20px 15px;
+    }
+    .app-footer p {
+        font-size: 0.85em;
+    }
+    .app-footer a {
+        margin: 0 5px;
+    }
+}
