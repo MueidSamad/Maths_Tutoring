@@ -11,9 +11,11 @@ import { PricingSection } from './components/PricingSection';
 import { AboutUsSection } from './components/AboutUsSection';
 import { Footer } from './components/Footer';
 import { ContactBookingSection, FormTypeKey } from './components/ContactBookingSection';
+import { LoginSection } from './components/LoginSection';
 
 const App = () => {
     const [activeSection, setActiveSectionState] = useState<string>('tutoring');
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => localStorage.getItem('loggedIn') === 'true');
     // initialServiceForContact will now hold 'HighSchool', 'University', 'Thesis', or null
     const [initialServiceForContact, setInitialServiceForContact] = useState<FormTypeKey | null>(null);
 
@@ -28,6 +30,18 @@ const App = () => {
         } else if (section !== 'contact') {
             setInitialServiceForContact(null); // Clear if navigating away from contact entirely
         }
+    };
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+        localStorage.setItem('loggedIn', 'true');
+        setActiveSectionState('homework');
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('loggedIn');
+        setActiveSectionState('login');
     };
 
     // For specific CTAs (e.g., "Book Tutor", "Inquire Thesis")
@@ -47,13 +61,15 @@ const App = () => {
             case 'tutoring':
                 return <TutoringSection navigateToContact={navigateToContactWithService} />;
             case 'homework':
-                return <HomeworkHelpSection />;
+                return <HomeworkHelpSection isLoggedIn={isLoggedIn} />;
             case 'thesis':
                 return <ThesisSection navigateToContact={navigateToContactWithService} />;
             case 'pricing':
                 return <PricingSection />;
             case 'about':
                 return <AboutUsSection />;
+            case 'login':
+                return <LoginSection onLogin={handleLogin} />;
             case 'contact':
                 return <ContactBookingSection initialService={initialServiceForContact} onServiceConsumed={handleServiceConsumed} />;
             default:
@@ -75,7 +91,8 @@ const App = () => {
             thesis: 'Thesis Assistance',
             pricing: 'Pricing and Payment',
             about: 'About Us',
-            contact: 'Contact & Booking'
+            contact: 'Contact & Booking',
+            login: 'Login'
         };
         document.title = `Math Genius Hub | ${pageTitles[activeSection] || 'Welcome'}`;
 
@@ -86,7 +103,7 @@ const App = () => {
         <div className="app-container">
             <a href="#main-content" className="skip-link">Skip to main content</a>
             <Header />
-            <Navigation activeSection={activeSection} setActiveSection={handleNavChange} />
+            <Navigation activeSection={activeSection} setActiveSection={handleNavChange} isLoggedIn={isLoggedIn} onLogout={handleLogout} />
             <main id="main-content" role="main" tabIndex={-1}>
                 {renderSection()}
             </main>
