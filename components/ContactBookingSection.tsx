@@ -126,15 +126,19 @@ export const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({ in
     e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
-      console.log(`Contact form data for ${activeFormType}:`, formData);
       try {
-        await new Promise(resolve => setTimeout(resolve, 1000)); 
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...formData, type: activeFormType })
+        });
+        if (!response.ok) {
+          throw new Error('Failed to submit');
+        }
         setSubmittedDataCache({ name: formData.name, email: formData.email });
         setIsSubmitted(true);
-        // setFormData(initialFormData); // Keep form data for success message, or clear if preferred
-        // setActiveFormType(null); // Optionally go back to selection
       } catch (err) {
-        setErrors(prev => ({...prev, email: 'Submission failed. Please try again.'})); // Generic error on a common field
+        setErrors(prev => ({...prev, email: 'Submission failed. Please try again.'}));
       } finally {
         setIsLoading(false);
       }

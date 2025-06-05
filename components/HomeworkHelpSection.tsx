@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-export const HomeworkHelpSection = () => {
+export interface HomeworkHelpSectionProps {
+    isLoggedIn: boolean;
+}
+
+export const HomeworkHelpSection: React.FC<HomeworkHelpSectionProps> = ({ isLoggedIn }) => {
     const [homeworkQuery, setHomeworkQuery] = useState('');
     const [aiResponse, setAiResponse] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +48,15 @@ export const HomeworkHelpSection = () => {
             setIsLoading(false);
         }
     };
+
+    if (!isLoggedIn) {
+        return (
+            <section id="homework" aria-labelledby="homework-heading">
+                <h2 id="homework-heading">Homework Assistance</h2>
+                <p>You must be logged in to access the AI assistant.</p>
+            </section>
+        );
+    }
 
     return (
         <section id="homework" aria-labelledby="homework-heading">
